@@ -4,7 +4,16 @@ const Schema = mongoose.Schema;
 const app = express();
 const jsonParser = express.json();
 
-const userScheme = new Schema({id: String, name: String, email: String, photo: String}, {versionKey: false});
+const userScheme = new Schema({id: String, name: String, email: String, photo: String,
+    chats: {
+        type: [{
+            with_id: String,
+            messages: [String]
+        }],
+        required: false
+    }
+
+}, {versionKey: false});
 
 const User = mongoose.model("user", userScheme);
 
