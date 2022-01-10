@@ -51,7 +51,15 @@ app.get("/api/messages/:id/:with_id", function(request, response){
     Messages.findOne({id: id, with_id: with_id}, function(error, messages){
         if(error)
             return console.log(error);
-        response.send(messages);
+        if(messages != null)
+            response.send(messages);
+        else{
+            Messages.findOne({id: with_id, with_id: id}, function(error, messages){
+                if(error)
+                    return console.log(error);
+                response.send(messages);
+            });
+        }
     });
 });
 
