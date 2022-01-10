@@ -105,7 +105,7 @@ app.post("/api/messages", jsonParser, function (request, response) {
     const withId = request.body.with_id;
     const userMessage = request.body.messages;
 
-    Messages.findOne({id: userId}, function(error, messages){
+    Messages.findOne({id: userId, with_id: withId}, function(error, messages){
         if(error)
             return console.log(error);
         if(messages == null) {
