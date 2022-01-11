@@ -50,8 +50,8 @@ app.get("/api/messages/:id", function(request, response){
     Messages.find({id: id}, function(error, messages){
         if(error)
             return console.log(error);
-        console.log(messages[0].with_id)
-        console.log(messages[1].with_id)
+        // console.log(messages[0].with_id)
+        // console.log(messages[1].with_id)
         response.send(messages);
     });
 });
