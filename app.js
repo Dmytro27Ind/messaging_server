@@ -45,6 +45,17 @@ app.get("/api/users/:id", function(request, response){
     });
 });
 
+app.get("/api/messages/:id", function(request, response){
+    const id = request.params.id;
+    Messages.find({id: id}, function(error, messages){
+        if(error)
+            return console.log(error);
+        console.log(messages[0].with_id)
+        console.log(messages[1].with_id)
+        response.send(messages);
+    });
+});
+
 app.get("/api/messages/:id/:with_id", function(request, response){
     const id = request.params.id;
     const with_id = request.params.with_id
