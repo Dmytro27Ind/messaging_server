@@ -45,6 +45,15 @@ app.get("/api/users/:id", function(request, response){
     });
 });
 
+app.get("/api/users/:email", function(request, response){
+    const email = request.params.email;
+    User.findOne({email: email}, function(error, user){
+        if(error)
+            return console.log(error);
+        response.send(user);
+    });
+});
+
 app.get("/api/messages/:id", function(request, response){
     const id = request.params.id;
     Messages.find({id: id}, function(error, messages){
