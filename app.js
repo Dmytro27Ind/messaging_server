@@ -45,7 +45,7 @@ app.get("/api/users/:id", function(request, response){
     });
 });
 
-app.get("/api/users/:email", function(request, response){
+app.get("/api/users/email/:email", function(request, response){
     const email = request.params.email;
     User.findOne({email: email}, function(error, user){
         if(error)
