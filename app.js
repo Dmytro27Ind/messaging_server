@@ -20,8 +20,14 @@ const messagesScheme = new Schema({
     }]
 }, {versionKey: false});
 
+const locationScheme = new Schema({
+    id: String,
+    location: String
+}, {versionKey: false});
+
 const User = mongoose.model("user", userScheme);
 const Messages = mongoose.model("messages", messagesScheme);
+const Location = mongoose.model("location", locationScheme)
 
 const PORT = process.env.PORT || 3000
 
@@ -42,6 +48,15 @@ app.get("/api/users/:id", function(request, response){
         if(error)
             return console.log(error);
         response.send(user);
+    });
+});
+
+app.get("/api/location/:id", function(request, response){
+    const id = request.params.id;
+    Location.findOne({id: id}, function(error, location){
+        if(error)
+            return console.log(error);
+        response.send(location);
     });
 });
 
@@ -91,6 +106,14 @@ app.get("/api/users", function(request, response){
     });
 });
 
+app.get("/api/location", function(request, response){
+    Location.find({}, function(error, location){
+        if(error)
+            return console.log(error);
+        response.send(location)
+    });
+});
+
 app.get("/api/messages", function(request, response){
     Messages.find({}, function(error, messages){
         if(error)
@@ -114,6 +137,22 @@ app.post("/api/users", jsonParser, function (request, response) {
         if(error)
             return console.log(error);
         response.send(user);
+    });
+});
+
+app.post("/api/location", jsonParser, function (request, response) {
+    if(!request.body)
+        return response.sendStatus(400);
+
+    const userId = request.body.id;
+    const userLocation = request.body.location;
+
+    const location = new Location({id: userId, location: userLocation});
+
+    location.save(function(error){
+        if(error)
+            return console.log(error);
+        response.send(location);
     });
 });
 
